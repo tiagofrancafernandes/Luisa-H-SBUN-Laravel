@@ -20,17 +20,17 @@
                             <span
                                 class="text-sm font-medium text-gray-900 truncate dark:text-white">{{ __('Author') }}:</span>
                             <span
-                                class="text-sm text-gray-500 truncate dark:text-gray-400">{{ $book->author_id }}</span>
+                                class="text-sm text-gray-500 truncate dark:text-gray-400">{{ $book->author?->name }}</span>
                         </p>
                         <p>
                             <span
                                 class="text-sm font-medium text-gray-900 truncate dark:text-white">{{ __('Category') }}:</span>
                             <span
-                                class="text-sm text-gray-500 truncate dark:text-gray-400">{{ $book->category_id }}</span>
+                                class="text-sm text-gray-500 truncate dark:text-gray-400">{{ $book->category?->name }}</span>
                         </p>
                         <p>
                             <span
-                                class="text-sm font-medium text-gray-900 truncate dark:text-white">{{ __('reference') }}:</span>
+                                class="text-sm font-medium text-gray-900 truncate dark:text-white">{{ __('Reference') }}:</span>
                             <span
                                 class="text-sm text-gray-500 truncate dark:text-gray-400">{{ $book->reference }}</span>
                         </p>

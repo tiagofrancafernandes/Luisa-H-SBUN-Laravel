@@ -24,11 +24,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/books', function () {
-    $books = DB::table('books')->limit(20)->get();
     //dd($books);
     //dump and die, debug only 
     return view('boox.index', [
-        'books' => $books,
+        //'books' => DB::table('books')->limit(20)->get(),
+        'books' => \App\Models\Book::limit(20)->with('author', 'category')->get(),
     ]);
 })->middleware(['auth'])->name('books.index');
 
