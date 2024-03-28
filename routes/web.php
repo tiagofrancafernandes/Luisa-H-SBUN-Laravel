@@ -25,10 +25,10 @@ Route::get('/dashboard', function () {
 
 Route::get('/books', function () {
     //dd($books);
-    //dump and die, debug only 
-    return view('boox.index', [
+    //dump and die, debug only
+    return view('books.index', [
         //'books' => DB::table('books')->limit(20)->get(),
-        'books' => \App\Models\Book::limit(20)->with('author', 'category')->get(),
+        'books' => \App\Models\Book::with('author', 'category')->paginate(20),
     ]);
 })->middleware(['auth'])->name('books.index');
 

@@ -4,8 +4,12 @@
             {{ __('Books') }}
         </h2>
     </x-slot>
-    
+
     <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
+            {{ $books->links('pagination::tailwind') }}
+        </div>
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @foreach($books as $book)
             <a href="#"
@@ -45,6 +49,10 @@
                 </div>
             </a>
             @endforeach
+        </div>
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            {{ $books->links('pagination::tailwind') }}
         </div>
     </div>
 </x-app-layout>
