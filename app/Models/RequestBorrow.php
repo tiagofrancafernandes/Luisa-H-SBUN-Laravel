@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use App\Enums\RequestBorrowStatus;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Borrow extends Model
+class RequestBorrow extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'borrowed_at',
-        'returned_at',
-        'return_by',
         'user_id',
         'book_id',
+        'status',
+    ];
+
+    protected $casts = [
+        'status'=> RequestBorrowStatus::class,
     ];
 
     /**
@@ -37,15 +39,5 @@ class Borrow extends Model
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class, 'book_id', 'id');
-    }
-
-    /**
-     * Get all of the requestReturns for the Borrow
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function requestReturns(): HasMany
-    {
-        return $this->hasMany(RequestReturn::class, 'borrow_id', 'id');
     }
 }
