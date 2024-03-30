@@ -17,7 +17,8 @@
                 <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                     src="https://flowbite.com/docs/images/blog/image-4.jpg" alt="">
                 <div class="flex flex-col p-4 justify-between w-full">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $book->title }}
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {{ $book->title }}
                     </h5>
                     <div class="mb-3">
                         <p>
@@ -43,8 +44,25 @@
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $book->sinopsis }}</p>
                     </div>
                     <div class="flex justify-end">
-                        <button type="button"
-                            class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Green</button>
+                        @if ($myBorrowedBooks?->contains($book->id))
+                            <span class="text-md text-gray-500 truncate dark:text-orange-400">
+                                @lang('Book already borrowed.')
+                            </span>
+                        @else
+                            @php
+                                $available = $book->available;
+                            @endphp
+                            <button
+                                type="button"
+                                @if (!$available)
+                                    disabled
+                                @endif
+                                @class([
+                                    'focus:outline-none text-white  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2',
+                                    'bg-green-700  hover:bg-green-800 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' => $available,
+                                    'bg-gray-700  hover:bg-gray-800 focus:ring-gray-300 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-800' => !$available,
+                                ])>@lang($available ? 'Borrow' : 'Unavailable')</button>
+                        @endif
                     </div>
                 </div>
             </a>

@@ -28,6 +28,8 @@ Route::get('/books', function () {
     //dump and die, debug only
     return view('books.index', [
         //'books' => DB::table('books')->limit(20)->get(),
+        'myBorrowedBooks' => \App\Models\Borrow::where('user_id', 3)
+            ->whereNull('returned_at')->select(['user_id', 'book_id'])->pluck('book_id'),
         'books' => \App\Models\Book::with('author', 'category')->paginate(20),
     ]);
 })->middleware(['auth'])->name('books.index');
