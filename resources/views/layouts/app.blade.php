@@ -13,9 +13,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900" style="background-image: url('https://i.postimg.cc/bYKzBvGd/Sbun-Girl-Reading6.png');  background-size: 35%; background-position: bottom right;  background-repeat: no-repeat; background-attachment: fixed;">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

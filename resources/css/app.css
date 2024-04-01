@@ -3,3 +3,9 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 5px; } ::-webkit-scrollbar-track { background-color: #f1f1f1; }
+
+body {
+    background-image: url('https://i.postimg.cc/4dbZj6j5/Sbun-Girl-Reading4.png');
+    background-size: cover; /* Cover the entire page */
+    background-position: bottom; /* Center the background image */
+  }
