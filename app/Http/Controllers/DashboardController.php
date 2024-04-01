@@ -22,6 +22,7 @@ class DashboardController extends Controller
     {
         return [
             'myBorrowedBooks' => Borrow::latest('updated_at')
+                ->orderBy('id', 'desc')
                 ->with('book')
                 ->where('user_id', auth()->user()->id)
                 ->limit(5)->get(),
