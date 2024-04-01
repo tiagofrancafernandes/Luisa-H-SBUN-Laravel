@@ -7,6 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property int $borrow_id
+ * @property RequestReturnStatus $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Borrow $borrow
+ * @method static \Database\Factories\RequestReturnFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn whereBorrowId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestReturn whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class RequestReturn extends Model
 {
     use HasFactory;
@@ -17,13 +37,13 @@ class RequestReturn extends Model
     ];
 
     protected $casts = [
-        'status'=> RequestReturnStatus::class,
+        'status' => RequestReturnStatus::class,
     ];
 
     /**
      * Get the borrow that owns the Borrow
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function borrow(): BelongsTo
     {

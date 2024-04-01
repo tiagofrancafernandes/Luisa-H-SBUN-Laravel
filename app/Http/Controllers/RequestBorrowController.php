@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
+use App\Models\RequestBorrow;
 
 class RequestBorrowController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct()
     {
-        return 'estou no index';
+        $this->middleware('auth');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        return 'estou no index';
     }
 
     /**
@@ -27,37 +26,36 @@ class RequestBorrowController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'book_id' => 'integer|exists:App\Models\Book,id'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        /**
+         * @var Book $book
+         */
+        $book = Book::findOrFail($request?->integer('book_id'));
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if (!$book?->available) {
+            return back()->with('error', __('This book is unavailable.'));
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        /**
+         * @var RequestBorrow|bool $requestBorrow
+         */
+        $requestBorrow = $book->requestBorrowThis($request?->user());
+
+        /**
+         * Maybe on success, redirect to request_borrow.index??!!
+         */
+        return $requestBorrow
+            ? back()->with('success', __('Request registered successfully!'))
+            : back()->with('error', __('Fail on regiter request!'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         //
     }

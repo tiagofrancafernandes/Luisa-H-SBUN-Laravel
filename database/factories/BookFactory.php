@@ -20,7 +20,7 @@ class BookFactory extends Factory
     {
         return [
             'title' => str(fake()->words(2, true))->title()->toString(),
-            'quantity' => rand(1, 100),
+            'quantity' => rand(0, 3),
             'reference' => rand(1000, 9000) . date('His'),
             'sinopsis' => fake()->paragraph(),
             'author_id' => Author::factory(),

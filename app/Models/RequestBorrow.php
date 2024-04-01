@@ -7,6 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $book_id
+ * @property RequestBorrowStatus $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Book $book
+ * @property-read User $user
+ * @method static \Database\Factories\RequestBorrowFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow whereBookId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RequestBorrow whereUserId($value)
+ * @mixin \Eloquent
+ */
 class RequestBorrow extends Model
 {
     use HasFactory;
@@ -18,13 +41,13 @@ class RequestBorrow extends Model
     ];
 
     protected $casts = [
-        'status'=> RequestBorrowStatus::class,
+        'status' => RequestBorrowStatus::class,
     ];
 
     /**
      * Get the user that owns the Borrow
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -34,7 +57,7 @@ class RequestBorrow extends Model
     /**
      * Get the book that owns the Borrow
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function book(): BelongsTo
     {

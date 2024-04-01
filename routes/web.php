@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -17,22 +17,13 @@ use App\Http\Controllers\RequestBorrowController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', fn () => view('welcome'));
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/books', function () {
-    //dd($books);
-    //dump and die, debug only
-    return view('books.index', [
-        //'books' => DB::table('books')->limit(20)->get(),
-        'myBorrowedBooks' => \App\Models\Borrow::where('user_id', auth()->user()->id)
-            ->whereNull('returned_at')->select(['user_id', 'book_id'])->pluck('book_id'),
-        'books' => \App\Models\Book::with('author', 'category')->paginate(20),
-    ]);
-})->middleware(['auth'])->name('books.index');
+Route::prefix('books')->name('books.')->group(function () {
+    Route::get('/', [BookController::class, 'index'])->name('index');
+})->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('request_borrow', RequestBorrowController::class);
+Route::prefix('request_borrow')->name('request_borrow.')->group(function () {
+    Route::get('/', [RequestBorrowController::class, 'index'])->name('index');
+    Route::match(['get', 'post'], 'store', [RequestBorrowController::class, 'store'])->name('store');
+    Route::match(['delete', 'post'], 'destroy', [RequestBorrowController::class, 'destroy'])->name('destroy');
+});
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
