@@ -120,12 +120,24 @@
                                     color="green"
                                     icon="fas-check"
                                     class="px-2 py-1"
+                                    href="{{
+                                        route('admin.request_borrow.update', [
+                                            'requestBorrow' => $item?->id,
+                                            'status' => \App\Enums\RequestBorrowStatus::APPROVED,
+                                        ])
+                                    }}"
                                 >@lang('Approve')</x-blocks.button-link>
 
                                 <x-blocks.button-link
                                     color="red"
                                     icon="fas-x"
                                     class="px-2 py-1"
+                                    href="{{
+                                        route('admin.request_borrow.update', [
+                                            'requestBorrow' => $item?->id,
+                                            'status' => \App\Enums\RequestBorrowStatus::REJECTED,
+                                        ])
+                                    }}"
                                 >@lang('Reject')</x-blocks.button-link>
                             </td>
                         </tr>

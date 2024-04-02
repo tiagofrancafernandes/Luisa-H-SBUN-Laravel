@@ -43,6 +43,20 @@ class RequestBorrowController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return '[WIP] ' . __METHOD__;
+        $request->validate([
+            'status' => 'required|integer|in:' . collect(RequestBorrowStatus::cases())->pluck('value')->implode(','),
+        ]);
+
+        $requestBorrow = RequestBorrow::where('status', RequestBorrowStatus::PENDING)->where('id', $id)->firstOrFail();
+
+        $status = RequestBorrowStatus::tryFrom($request->input('status'));
+
+        $updated = $requestBorrow->update([
+            'status' => $status,
+        ]);
+
+        return $updated
+            ? back()->with('success', __('Request updated successfully!'))
+            : back()->with('error', __('Fail on update the request!'));
     }
 }

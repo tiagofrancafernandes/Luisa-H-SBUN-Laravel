@@ -49,7 +49,7 @@ class RequestBorrowController extends Controller
          */
         return $requestBorrow
             ? back()->with('success', __('Request registered successfully!'))
-            : back()->with('error', __('Fail on regiter request!'));
+            : back()->with('error', __('Fail on register the request!'));
     }
 
     /**
