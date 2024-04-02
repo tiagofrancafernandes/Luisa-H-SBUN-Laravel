@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
 
 class InitialUserSeeder extends Seeder
 {
@@ -13,23 +14,31 @@ class InitialUserSeeder extends Seeder
      */
     public function run(): void
     {
+        Model::unguard(false);
+        // dump(Model::isUnguarded());
+
         $users = [
             [
                 'name' => 'Lu Admin',
                 'email' => 'lu@lu.com',
                 'password' => Hash::make('password'),
+                'is_admin' => true,
             ],
             [
                 'name' => 'Admin',
                 'email' => 'admin@mail.com',
                 'password' => Hash::make('power@123'),
+                'is_admin' => true,
             ],
         ];
 
         foreach ($users as $userData) {
-            User::updateOrCreate([
+            $user = User::updateOrCreate([
                 'email' => $userData['email'],
             ], $userData);
+
+            $user->is_admin = boolval($userData['is_admin'] ?? null);
+            $user->save();
         }
     }
 }

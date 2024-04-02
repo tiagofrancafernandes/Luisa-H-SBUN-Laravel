@@ -27,7 +27,7 @@ class RequestBorrowController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'book_id' => 'integer|exists:App\Models\Book,id'
+            'book_id' => 'integer|exists:App\Models\Book,id',
         ]);
 
         /**

@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
+ * @property int|bool $is_admin
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -61,6 +62,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $guard = [
+        'is_admin',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -81,6 +86,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $appends = [
+        //
+    ];
+
     /**
      * Get all of the borrows for the User
      *
@@ -99,5 +108,10 @@ class User extends Authenticatable
     public function requestReturns(): HasMany
     {
         return $this->hasMany(RequestReturn::class, 'user_id', 'id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return boolval($this->is_admin ?? null);
     }
 }
