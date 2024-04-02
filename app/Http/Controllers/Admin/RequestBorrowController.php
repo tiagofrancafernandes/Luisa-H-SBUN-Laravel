@@ -55,7 +55,13 @@ class RequestBorrowController extends Controller
             'status' => $status,
         ]);
 
-        return $updated
+        $borrow = null;
+
+        if ($status === RequestBorrowStatus::APPROVED) {
+            $borrow = $requestBorrow?->book->borrowThis($requestBorrow?->user); //WIP // TODO
+        }
+
+        return $updated && $borrow
             ? back()->with('success', __('Request updated successfully!'))
             : back()->with('error', __('Fail on update the request!'));
     }
