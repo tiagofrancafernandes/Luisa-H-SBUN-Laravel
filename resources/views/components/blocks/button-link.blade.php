@@ -23,7 +23,7 @@ $classes = match ($color ?? 'danger') {
     default => '',
 };
 
-$classes .= 'text-center inline-flex items-center me-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest   focus:outline-none ring-0 transition ease-in-out duration-150';
+$classes .= 'text-center inline-flex items-center me-2 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest   focus:outline-none ring-0 transition ease-in-out duration-150';
 @endphp
 
 <a

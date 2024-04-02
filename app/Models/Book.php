@@ -56,6 +56,7 @@ class Book extends Model
 
     protected $appends = [
         'available',
+        'availableQuantity',
     ];
 
     public function author()
@@ -71,6 +72,11 @@ class Book extends Model
     public function getAvailableAttribute()
     {
         return $this->borrows()->whereNull('returned_at')->count() < $this->quantity;
+    }
+
+    public function getAvailableQuantityAttribute()
+    {
+        return $this->quantity - $this->borrows()->whereNull('returned_at')->count();
     }
 
     /**

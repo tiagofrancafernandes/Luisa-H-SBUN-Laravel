@@ -23,7 +23,7 @@ class RequestBorrowController extends Controller
                 'records' => RequestBorrow::whereStatus($status)
                     ->with([
                         'user' => fn ($query) => $query->select('id', 'name'),
-                        'book' => fn ($query) => $query->select('id', 'title'),
+                        'book' => fn ($query) => $query->select('id', 'title', 'quantity'),
                     ])
                     ->orderBy('id', 'asc')->paginate(20),
             ]
@@ -55,10 +55,12 @@ class RequestBorrowController extends Controller
             'status' => $status,
         ]);
 
+        $requestBorrow = $requestBorrow?->fresh();
+
         $borrow = null;
 
-        if ($status === RequestBorrowStatus::APPROVED) {
-            $borrow = $requestBorrow?->book->borrowThis($requestBorrow?->user); //WIP // TODO
+        if ($updated && $requestBorrow?->status === RequestBorrowStatus::APPROVED) {
+            $borrow = $requestBorrow?->book->borrowThis($requestBorrow?->user);
         }
 
         return $updated && $borrow

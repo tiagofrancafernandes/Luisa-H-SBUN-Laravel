@@ -116,10 +116,11 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
+                                @if ($item?->book?->available)
                                 <x-blocks.button-link
                                     color="green"
                                     icon="fas-check"
-                                    class="px-2 py-1"
+                                    class="px-2 py-1 uppercase"
                                     href="{{
                                         route('admin.request_borrow.update', [
                                             'requestBorrow' => $item?->id,
@@ -131,7 +132,7 @@
                                 <x-blocks.button-link
                                     color="red"
                                     icon="fas-x"
-                                    class="px-2 py-1"
+                                    class="px-2 py-1 uppercase"
                                     href="{{
                                         route('admin.request_borrow.update', [
                                             'requestBorrow' => $item?->id,
@@ -139,6 +140,16 @@
                                         ])
                                     }}"
                                 >@lang('Reject')</x-blocks.button-link>
+                                @else
+                                <span
+                                    @class([
+                                        'focus:outline-none text-white  focus:ring-4 text-xs rounded-lg text-sm px-2 py-1 me-2 mb-2',
+                                        'bg-gray-700  focus:ring-gray-300 dark:bg-gray-500 dark:focus:ring-gray-800 uppercase',
+                                    ])
+                                >
+                                    @lang('Unavailable')
+                                </span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
