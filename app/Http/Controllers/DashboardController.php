@@ -15,7 +15,11 @@ class DashboardController extends Controller
 
     public function __invoke(Request $request)
     {
-        return view('dashboard', static::getViewData($request->user()));
+        if (!$request->user()?->isAdmin()) {
+            return view('dashboard', static::getViewData($request->user()));
+        }
+
+        return view('admin.dashboard', static::getViewData($request->user()));
     }
 
     public static function getViewData(User $user): array

@@ -12,7 +12,7 @@ $reasonBeacauseCannot = function($book) use(
     }
 
     if ($myRequestBorrowedBooks?->contains($book->id)) {
-        return __('Book already requested.');
+        return __('Book requested.');
     }
 
     return null;
