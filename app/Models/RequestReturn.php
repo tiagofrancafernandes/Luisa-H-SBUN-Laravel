@@ -49,4 +49,26 @@ class RequestReturn extends Model
     {
         return $this->belongsTo(Borrow::class, 'borrow_id', 'id');
     }
+
+    public function confirmReturnThis(): bool
+    {
+        /**
+         * @var Borrow $borrow
+         */
+        $borrow = $this->borrow;
+
+        if (!$borrow) {
+            return false;
+        }
+
+        if ($borrow->returned_at || !$borrow->return_by) {
+            return false;
+        }
+
+        return boolval(
+            $borrow?->update([
+                'returned_at' => now(),
+            ])
+        );
+    }
 }

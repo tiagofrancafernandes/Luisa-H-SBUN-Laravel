@@ -11,6 +11,7 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            @if ($records?->count())
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -45,18 +46,18 @@
                             </td>
                             <td class="px-6 py-4">
                                 <a
-                                    href="#!book={{ $item?->book?->id }}"
+                                    href="#!book={{ $item?->borrow?->book?->id }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                 >
-                                    {{ $item?->book?->title }}
+                                    {{ $item?->borrow?->book?->title }}
                                 </a>
                             </td>
                             <td class="px-6 py-4">
                                 <a
-                                    href="#!user={{ $item?->user?->id }}"
+                                    href="#!user={{ $item?->borrow?->user?->id }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                 >
-                                    {{ $item?->user?->name }}
+                                    {{ $item?->borrow?->user?->name }}
                                 </a>
                             </td>
                             <td class="px-6 py-4">
@@ -64,31 +65,47 @@
                                     <div
                                         @class([
                                             'h-2.5 w-2.5 rounded-full me-2',
-                                            'bg-yellow-500' => $item?->status === \App\Enums\RequestBorrowStatus::PENDING,
-                                            'bg-green-500' => $item?->status === \App\Enums\RequestBorrowStatus::APPROVED,
-                                            'bg-red-500' => $item?->status === \App\Enums\RequestBorrowStatus::REJECTED,
+                                            'bg-yellow-500' => $item?->status === \App\Enums\RequestReturnStatus::PENDING,
+                                            'bg-green-500' => $item?->status === \App\Enums\RequestReturnStatus::APPROVED,
+                                            'bg-red-500' => $item?->status === \App\Enums\RequestReturnStatus::REJECTED,
                                         ])></div>
                                     {{ $item?->status?->name }}
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                [XYZ]
                                 <x-blocks.button-link
                                     color="green"
                                     icon="fas-check"
-                                    class="px-2 py-1"
-                                >@lang('Approve')</x-blocks.button-link>
+                                    class="px-2 py-1 uppercase"
+                                    href="{{
+                                        route('admin.request_return.update', [
+                                            'requestBorrow' => $item?->id,
+                                            'status' => \App\Enums\RequestReturnStatus::APPROVED,
+                                        ])
+                                    }}"
+                                >@lang('Confirm')</x-blocks.button-link>
 
                                 <x-blocks.button-link
                                     color="red"
                                     icon="fas-x"
-                                    class="px-2 py-1"
+                                    class="px-2 py-1 uppercase"
+                                    href="{{
+                                        route('admin.request_return.update', [
+                                            'requestBorrow' => $item?->id,
+                                            'status' => \App\Enums\RequestReturnStatus::REJECTED,
+                                        ])
+                                    }}"
                                 >@lang('Reject')</x-blocks.button-link>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 py-3">
+                @lang('No records')
+            </div>
+            @endif
         </div>
     </div>
 
@@ -96,4 +113,35 @@
     {{ $records->links('pagination::tailwind') }}
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    /*
+    document.querySelectorAll('[href$="update\?status=2"]')
+        .forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+
+                if (!event.target?.href) {
+                    return;
+                }
+
+                fetch(event.target.href)
+                    .then(res => {
+
+                        if (res.ok) {
+                            event.target?.closest('tr')?.remove();
+                            window?.Toaster?.success(`Item removed successfully`, null, null, 6000);
+                        }
+
+                        return res;
+                    })
+                    .catch(error => {
+                    window?.Toaster?.error(`Error on remove item`, null, null, 6000);
+                })
+            })
+        });
+    */
+});
+</script>
 </x-app-layout>

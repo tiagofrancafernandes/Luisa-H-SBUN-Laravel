@@ -24,4 +24,14 @@ class RequestReturnFactory extends Factory
             'borrow_id' => Borrow::factory(),
         ];
     }
+
+    public function notReturned(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => RequestBorrowStatus::PENDING,
+            'borrow_id' => Borrow::factory(state: [
+                'returned_at' => null,
+            ]),
+        ]);
+    }
 }

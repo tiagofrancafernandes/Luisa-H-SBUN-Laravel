@@ -32,6 +32,9 @@ $isAdmin = str(\Route::currentRouteName())->startsWith('admin.');
                         <x-nav-link :href="route('admin.request_borrow.index')" :active="request()->routeIs('admin.request_borrow.index')">
                             {{ __('Request borrows') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.request_return.index')" :active="request()->routeIs('admin.request_return.index')">
+                            {{ __('Request return') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -101,6 +104,9 @@ $isAdmin = str(\Route::currentRouteName())->startsWith('admin.');
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.request_borrow.index')" :active="request()->routeIs('admin.request_borrow.index')">
                     {{ __('Request borrows') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.request_return.index')" :active="request()->routeIs('admin.request_return.index')">
+                    {{ __('Request returns') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
