@@ -57,6 +57,6 @@ class RequestBorrowController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        //
+        // TODO
     }
 }

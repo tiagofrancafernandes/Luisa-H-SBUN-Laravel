@@ -37,8 +37,11 @@ Route::prefix('request_borrow')->name('request_borrow.')->group(function () {
     Route::match(['delete', 'post'], 'destroy', [RequestBorrowController::class, 'destroy'])->name('destroy');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    require __DIR__ . '/admin.php';
-});
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware('admin')
+    ->group(function () {
+        require __DIR__ . '/admin.php';
+    });
 
 require __DIR__ . '/auth.php';

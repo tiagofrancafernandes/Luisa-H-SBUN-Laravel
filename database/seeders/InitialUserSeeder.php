@@ -30,6 +30,12 @@ class InitialUserSeeder extends Seeder
                 'password' => Hash::make('power@123'),
                 'is_admin' => true,
             ],
+            [
+                'name' => 'User 1',
+                'email' => 'user1@mail.com',
+                'password' => Hash::make('password'),
+                'is_admin' => false,
+            ],
         ];
 
         foreach ($users as $userData) {

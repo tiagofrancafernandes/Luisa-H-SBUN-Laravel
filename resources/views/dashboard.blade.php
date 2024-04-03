@@ -35,7 +35,14 @@
                                 <div
                                     class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                     @if (!$myBorrowedBook->returned_at)
-                                        <x-blocks.button color="orange" icon="tabler-arrow-back" icon-position="left">Devolver</x-blocks.button>
+                                        <x-blocks.button-link
+                                            color="orange"
+                                            icon="tabler-arrow-back"
+                                            class="px-2 py-1 uppercase relative"
+                                        >
+                                            <span class="absolute inline-flex items-center justify-center w-10 h-6 px-5 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -end-2 dark:border-gray-900">Late</span>
+                                            @lang('Return')
+                                    </x-blocks.button-link>
                                     @endif
                                 </div>
                             </div>

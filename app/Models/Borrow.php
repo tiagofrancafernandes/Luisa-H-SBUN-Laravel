@@ -11,14 +11,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  *
  * @property int $id
- * @property string $borrowed_at
- * @property string|null $returned_at
- * @property string|null $return_by
+ * @property \Illuminate\Support\Carbon $borrowed_at
+ * @property \Illuminate\Support\Carbon|null $returned_at
+ * @property \Illuminate\Support\Carbon|null $return_by
  * @property int $user_id
  * @property int $book_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Book $book
+ * @property-read mixed $is_late
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestReturn> $requestReturns
  * @property-read int|null $request_returns_count
  * @property-read User $user
@@ -46,6 +47,16 @@ class Borrow extends Model
         'return_by',
         'user_id',
         'book_id',
+    ];
+
+    protected $appends = [
+        'isLate',
+    ];
+
+    public $casts = [
+        'borrowed_at' => 'datetime',
+        'returned_at' => 'datetime',
+        'return_by' => 'datetime',
     ];
 
     /**
@@ -76,5 +87,14 @@ class Borrow extends Model
     public function requestReturns(): HasMany
     {
         return $this->hasMany(RequestReturn::class, 'borrow_id', 'id');
+    }
+
+    public function getIsLateAttribute()
+    {
+        if ($this->returned_at || !$this->return_by) {
+            return false;
+        }
+
+        return now()->unix() > $this->return_by?->unix();
     }
 }

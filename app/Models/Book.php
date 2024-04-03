@@ -26,6 +26,7 @@ use App\Enums\RequestBorrowStatus;
  * @property-read int|null $borrows_count
  * @property-read Category|null $category
  * @property-read mixed $available
+ * @property-read mixed $available_quantity
  * @method static \Database\Factories\BookFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Book newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Book newQuery()
