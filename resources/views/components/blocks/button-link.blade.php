@@ -20,6 +20,7 @@ $classes = match ($color ?? 'danger') {
     'yellow', 'warning' => 'bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700 focus:ring-yellow-500',
     'orange' => 'bg-orange-600 hover:bg-orange-500 active:bg-orange-700 focus:ring-orange-500',
     'sky', 'blue', 'info' => 'bg-sky-600 hover:bg-sky-500 active:bg-sky-700 focus:ring-sky-500',
+    'gray' => 'bg-gray-600 hover:bg-gray-500 active:bg-gray-700 focus:ring-gray-500',
     default => '',
 };
 
@@ -32,10 +33,10 @@ $classes .= 'text-center inline-flex items-center me-2 border border-transparent
         'class' => $classes,
 ]) }}>
     @if ($leftIcon)
-        @svg($leftIcon, 'w-3.5 h-3.5 me-2')
+        @svg($leftIcon, 'w-3.5 h-3.5 ml-1')
     @endif
     {{ $slot }}
     @if ($rightIcon)
-        @svg($rightIcon, 'w-3.5 h-3.5 me-2')
+        @svg($rightIcon, 'w-3.5 h-3.5 ml-1')
     @endif
 </a>

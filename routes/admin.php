@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\RequestReturnController;
 
 Route::get('/', fn () => to_route('dashboard'))->name('index');
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
-Route::resource('books', BookController::class);
+Route::resource('books', BookController::class)->except(['delete']);
+Route::match(['get', 'delete', 'post'], 'books/{book}/delete', [BookController::class, 'destroy'])->name('books.destroy');
 
 Route::prefix('request_borrow')->name('request_borrow.')->group(function () {
     Route::get('/', [RequestBorrowController::class, 'index'])->name('index');

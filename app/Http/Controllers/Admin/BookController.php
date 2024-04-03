@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -12,7 +13,10 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        return '[WIP] ' . __METHOD__;
+        return view('admin.books.index', [
+            'records' => Book::orderBy('id', 'asc')
+                ->paginate(20),
+        ]);
     }
 
     /**
