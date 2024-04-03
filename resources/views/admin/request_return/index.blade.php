@@ -72,6 +72,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
+                                [XYZ]
                                 <x-blocks.button-link
                                     color="green"
                                     icon="fas-check"

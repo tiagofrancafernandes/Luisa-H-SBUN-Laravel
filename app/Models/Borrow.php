@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\RequestReturnStatus;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  *
@@ -89,6 +91,11 @@ class Borrow extends Model
         return $this->hasMany(RequestReturn::class, 'borrow_id', 'id');
     }
 
+    public function scopeNotRetuned(Builder $query): Builder
+    {
+        return $query->whereNull('returned_at');
+    }
+
     public function getIsLateAttribute()
     {
         if ($this->returned_at || !$this->return_by) {
@@ -96,5 +103,19 @@ class Borrow extends Model
         }
 
         return now()->unix() > $this->return_by?->unix();
+    }
+
+    public function requestReturnThis(): RequestReturn|bool
+    {
+        if ($this->returned_at) {
+            return false;
+        }
+
+        $data = [
+            'borrow_id' => $this->id,
+            'status' => RequestReturnStatus::PENDING?->value,
+        ];
+
+        return RequestReturn::firstOrCreate($data, $data);
     }
 }

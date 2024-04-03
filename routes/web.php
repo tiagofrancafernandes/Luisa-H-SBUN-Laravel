@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestBorrowController;
+use App\Http\Controllers\RequestReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,12 @@ Route::prefix('request_borrow')->name('request_borrow.')->group(function () {
     Route::get('/', [RequestBorrowController::class, 'index'])->name('index');
     Route::match(['get', 'post'], 'store', [RequestBorrowController::class, 'store'])->name('store');
     Route::match(['delete', 'post'], 'destroy', [RequestBorrowController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('request_return')->name('request_return.')->group(function () {
+    Route::get('/', [RequestReturnController::class, 'index'])->name('index');
+    Route::match(['get', 'post'], 'store', [RequestReturnController::class, 'store'])->name('store');
+    Route::match(['delete', 'post'], 'destroy', [RequestReturnController::class, 'destroy'])->name('destroy');
 });
 
 Route::prefix('admin')

@@ -26,10 +26,14 @@ class DashboardController extends Controller
     {
         return [
             'myBorrowedBooks' => Borrow::latest('updated_at')
+                ->whereNull('returned_at')
+                ->with('requestReturns')
+                ->withCount('requestReturns')
+                // ->doesntHave('requestReturns')
                 ->orderBy('id', 'desc')
                 ->with('book')
                 ->where('user_id', auth()->user()->id)
-                ->limit(5)->get(),
+                ->paginate(5),
         ];
     }
 }
