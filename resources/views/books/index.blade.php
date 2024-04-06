@@ -36,11 +36,44 @@ $reasonBeacauseCannot = function($book) use(
                 <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                     src="https://flowbite.com/docs/images/blog/image-4.jpg" alt="">
                 <div class="flex flex-col p-4 justify-between w-full">
-                    <a href="#!{{ $book->id }}">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            {{ $book->title }} | #{{ $book->id }}
-                        </h5>
-                    </a>
+                    <div class="flex justify-between">
+                        <div class="flex">
+                            <a href="#!{{ $book->id }}">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    {{ $book->title }} | #{{ $book->id }}
+                                </h5>
+                            </a>
+                        </div>
+
+                        <div>
+                            @if ($reason = $reasonBeacauseCannot($book))
+                                <span class="text-md text-gray-500 truncate dark:text-orange-400">
+                                    {{ $reason }}
+                                </span>
+                            @else
+                                @if ($book->available)
+                                    <a
+                                        href="{{ route('request_borrow.store', ['book_id' => $book->id]) }}"
+                                        @class([
+                                            'focus:outline-none text-white ring-0  font-medium rounded-lg text-sm px-5 py-2.5',
+                                            'bg-green-700  hover:bg-green-800 ring-0 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800',
+                                        ])
+                                    >
+                                        @lang('Borrow')
+                                    </a>
+                                @else
+                                    <span
+                                        @class([
+                                            'focus:outline-none text-white ring-0 font-medium rounded-lg text-sm px-5 py-2.5',
+                                            'bg-gray-700 dark:bg-gray-500 ring-0',
+                                        ])
+                                    >
+                                        @lang('Unavailable')
+                                    </span>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <p>
                             <span
@@ -62,40 +95,15 @@ $reasonBeacauseCannot = function($book) use(
                         </p>
                     </div>
                     <div class="w-full">
+                        <div>
+                            <span
+                                class="text-sm font-medium text-gray-900 truncate dark:text-white">{{ __('Sinopsis') }}:</span></div>
                         <div
                             @class([
                                 'w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 px-4 py-2',
                                 'mb-3 font-normal text-gray-700 dark:text-gray-400 overflow-y-auto h-32',
                             ])
                         >{!! $book->sinopsis !!}</div>
-                    </div>
-                    <div class="flex justify-end">
-                        @if ($reason = $reasonBeacauseCannot($book))
-                            <span class="text-md text-gray-500 truncate dark:text-orange-400">
-                                {{ $reason }}
-                            </span>
-                        @else
-                            @if ($book->available)
-                                <a
-                                    href="{{ route('request_borrow.store', ['book_id' => $book->id]) }}"
-                                    @class([
-                                        'focus:outline-none text-white  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2',
-                                        'bg-green-700  hover:bg-green-800 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800',
-                                    ])
-                                >
-                                    @lang('Borrow')
-                                </a>
-                            @else
-                                <span
-                                    @class([
-                                        'focus:outline-none text-white  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2',
-                                        'bg-gray-700  hover:bg-gray-800 focus:ring-gray-300 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-800',
-                                    ])
-                                >
-                                    @lang('Unavailable')
-                                </span>
-                            @endif
-                        @endif
                     </div>
                 </div>
             </div>
