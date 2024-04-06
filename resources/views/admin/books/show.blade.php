@@ -56,7 +56,9 @@
                         <p><strong>@lang('Category')</strong>: {{ $record?->category?->name }}</p>
                     </div>
                     <div><strong>@lang('Sinopsis')</strong>:</div>
-                    <div class="w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4">{!! $record?->sinopsis !!}</div>
+                    <div
+                        class="w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4"
+                    >{!! $record?->sinopsis !!}</div>
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@ $reasonBeacauseCannot = function($book) use(
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @foreach($books as $book)
             <div
-                class="w-full mb-6 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 ">
+                class="w-full mb-6 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row dark:border-gray-700 dark:bg-gray-800">
                 <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                     src="https://flowbite.com/docs/images/blog/image-4.jpg" alt="">
                 <div class="flex flex-col p-4 justify-between w-full">
@@ -62,7 +62,12 @@ $reasonBeacauseCannot = function($book) use(
                         </p>
                     </div>
                     <div class="w-full">
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $book->sinopsis }}</p>
+                        <div
+                            @class([
+                                'w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 px-4 py-2',
+                                'mb-3 font-normal text-gray-700 dark:text-gray-400 overflow-y-auto h-32',
+                            ])
+                        >{!! $book->sinopsis !!}</div>
                     </div>
                     <div class="flex justify-end">
                         @if ($reason = $reasonBeacauseCannot($book))
