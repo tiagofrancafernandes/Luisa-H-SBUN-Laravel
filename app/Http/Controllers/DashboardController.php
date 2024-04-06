@@ -24,6 +24,25 @@ class DashboardController extends Controller
 
     public static function getViewData(User $user): array
     {
+        if ($user?->isAdmin()) {
+            return static::getAdminViewData();
+        }
+
+        return [
+            'myBorrowedBooks' => Borrow::latest('updated_at')
+                ->whereNull('returned_at')
+                ->with('requestReturns')
+                ->withCount('requestReturns')
+                // ->doesntHave('requestReturns')
+                ->orderBy('id', 'desc')
+                ->with('book')
+                ->where('user_id', auth()->user()->id)
+                ->paginate(5),
+        ];
+    }
+
+    protected static function getAdminViewData(): array
+    {
         return [
             'myBorrowedBooks' => Borrow::latest('updated_at')
                 ->whereNull('returned_at')
