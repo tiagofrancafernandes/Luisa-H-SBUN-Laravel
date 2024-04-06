@@ -13,7 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+        @bukStyles(true)
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900" style="background-image: url('https://i.postimg.cc/bYKzBvGd/Sbun-Girl-Reading6.png');  background-size: 35%; background-position: bottom right;  background-repeat: no-repeat; background-attachment: fixed;">
@@ -29,10 +30,28 @@
                 </header>
             @endif
 
+            @if ($errors->any())
+            <div class="w-full px-4 pt-5">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-red-500">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
         </div>
+        @bukScripts(true)
+        <script src="//cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                document.querySelectorAll('.choices-select')
+                    ?.forEach(element => new Choices(element));
+            });
+        </script>
     </body>
 </html>

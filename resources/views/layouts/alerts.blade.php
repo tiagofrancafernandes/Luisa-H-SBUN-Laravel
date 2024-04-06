@@ -96,12 +96,6 @@
 >
 </div>
 
-{{--
-    @if (session()->has('errors'))
-    @dd(session()->get('errors'))
-    @endif
---}}
-
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         @if (session()->has('success'))

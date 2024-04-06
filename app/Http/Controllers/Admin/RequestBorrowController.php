@@ -47,11 +47,15 @@ class RequestBorrowController extends Controller
             'status' => 'required|integer|in:' . collect(RequestBorrowStatus::cases())->pluck('value')->implode(','),
         ]);
 
-        $requestBorrow = RequestBorrow::where('status', RequestBorrowStatus::PENDING)->where('id', $id)->firstOrFail();
+        $requestBorrow = RequestBorrow::where('status', RequestBorrowStatus::PENDING)->where('id', $id)->first();
+
+        if (!$requestBorrow) {
+            return redirect()->route('admin.request_borrow.index');
+        }
 
         $status = RequestBorrowStatus::tryFrom($request->input('status'));
 
-        $updated = $requestBorrow->update([
+        $updated = $requestBorrow?->update([
             'status' => $status,
         ]);
 
@@ -64,7 +68,7 @@ class RequestBorrowController extends Controller
         }
 
         return $updated && $borrow
-            ? back()->with('success', __('Request updated successfully!'))
-            : back()->with('error', __('Fail on update the request!'));
+            ? redirect()->route('admin.request_borrow.index')->with('success', __('Request updated successfully!'))
+            : redirect()->route('admin.request_borrow.index')->with('error', __('Fail on update the request!'));
     }
 }

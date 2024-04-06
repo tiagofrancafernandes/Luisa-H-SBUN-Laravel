@@ -1,8 +1,31 @@
 <x-app-layout>
 <x-slot name="header">
-<h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-{{ __('Borrowing Requests') }}
-</h2>
+    <div class="w-full grid grid-cols-12 gap-9">
+        <div class="col-span-6">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Borrowing Requests') }}
+            </h2>
+        </div>
+
+        <div class="col-span-4">
+            {{-- <form class="grid gap-6 mb-6 md:grid-cols-6">
+                <div class="text-gray-800 dark:text-gray-200 leading-tight pt-1">Search</div>
+                <x-blocks.form.input-grid
+                    type="search"
+                    name="search"
+                    placeholder="{{ __('Search') }}"
+                    containerClass="col-span-4"
+                    class="py-1"
+                    :value="request()->input('search')"
+                    hideLabel
+                />
+            </form> --}}
+        </div>
+
+        <div class="col-span-2">
+            {{--  --}}
+        </div>
+    </div>
 </x-slot>
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">

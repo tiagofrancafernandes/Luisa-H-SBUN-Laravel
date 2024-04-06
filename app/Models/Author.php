@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  *
@@ -29,4 +30,11 @@ class Author extends Model
     protected $fillable = [
         'name',
     ];
+
+    public static function keyValue(string $columnAsValue = 'name', string $columnAsKey = 'id'): Collection
+    {
+        $cacheKey = implode(':', [static::class, $columnAsKey, $columnAsValue]);
+
+        return cache()->remember($cacheKey, 5 * 60, fn () => static::pluck($columnAsValue, $columnAsKey));
+    }
 }

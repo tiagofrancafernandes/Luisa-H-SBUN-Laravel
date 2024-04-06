@@ -1,5 +1,6 @@
 @php
-$isAdmin = str(\Route::currentRouteName())->startsWith('admin.');
+// $isAdmin = str(\Route::currentRouteName())->startsWith('admin.');
+$isAdmin = auth()->user()?->isAdmin();
 @endphp
 <nav
     x-data="{ open: false }"
@@ -22,26 +23,28 @@ $isAdmin = str(\Route::currentRouteName())->startsWith('admin.');
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-5 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
+                        {{ __('Books') }}
+                    </x-nav-link>
+
                     @if ($isAdmin ?? null)
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.index')">
-                            {{ __('Books') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.request_borrow.index')" :active="request()->routeIs('admin.request_borrow.index')">
-                            {{ __('Request borrows') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.request_return.index')" :active="request()->routeIs('admin.request_return.index')">
-                            {{ __('Request return') }}
-                        </x-nav-link>
-                    @else
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
-                            {{ __('Books') }}
-                        </x-nav-link>
+                    <div class="border-l border-orange-100 dark:border-orange-700">
+                    </div>
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.index')">
+                        {{ __('Books') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.request_borrow.index')" :active="request()->routeIs('admin.request_borrow.index')">
+                        {{ __('Request borrows') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.request_return.index')" :active="request()->routeIs('admin.request_return.index')">
+                        {{ __('Request return') }}
+                    </x-nav-link>
                     @endif
                 </div>
             </div>

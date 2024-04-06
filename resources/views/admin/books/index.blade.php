@@ -1,8 +1,38 @@
 <x-app-layout>
 <x-slot name="header">
-<h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-{{ __('Return Requests') }}
-</h2>
+    <div class="w-full grid grid-cols-12 gap-9">
+        <div class="col-span-6">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Books') }}
+            </h2>
+        </div>
+
+        <div class="col-span-4">
+            <form class="grid gap-6 mb-6 md:grid-cols-6">
+                <div class="text-gray-800 dark:text-gray-200 leading-tight pt-1">Search</div>
+                <x-blocks.form.input-grid
+                    type="search"
+                    name="search"
+                    placeholder="{{ __('Search') }}"
+                    containerClass="col-span-4"
+                    class="py-1"
+                    :value="request()->input('search')"
+                    hideLabel
+                />
+            </form>
+        </div>
+
+        <div class="col-span-2">
+            <x-blocks.button-link
+                color="green"
+                icon="fas-plus"
+                class="px-2 py-1 uppercase"
+                href="{{
+                    route('admin.books.create')
+                }}"
+            >@lang('Create')</x-blocks.button-link>
+        </div>
+    </div>
 </x-slot>
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
@@ -16,28 +46,28 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            #
+                            <a href="?orderBy=id&dir=desc">#</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Title')
+                            <a href="?orderBy=title&dir=desc">@lang('Title')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Quantity')
+                            <a href="?orderBy=quantity&dir=desc">@lang('Quantity')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Reference')
+                            <a href="?orderBy=reference&dir=desc">@lang('Reference')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Author')
+                            <a href="?orderBy=author_id&dir=desc">@lang('Author')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Category')
+                            <a href="?orderBy=category_id&dir=desc">@lang('Category')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Available Quantity')
+                            <a href="?orderBy=quantity&dir=desc">@lang('Available Quantity')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            @lang('Available')
+                            <a href="?orderBy=id&dir=desc">@lang('Available')</a>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             @lang('Actions')?
@@ -60,10 +90,14 @@
                                 {{ $item->reference }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $item->author_id }}
+                                <a
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                    href="#author={{ $item->author_id }}">{{ $item->author?->name }}</a>
                             </td>
                             <td class="px-6 py-4">
-                                {{ $item->category_id }}
+                                <a
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                    href="#category={{ $item->category_id }}">{{ $item->category?->name }}</a>
                             </td>
                             <td class="px-6 py-4">
                                 {{ $item->availableQuantity }}
@@ -101,6 +135,7 @@
                                                 'book' => $item?->id,
                                             ])
                                         }}"
+                                        onclick="return confirm('{{ __('Do you really want to delete this item?') }}')"
                                     >
                                         @lang('Delete')
                                     </x-blocks.button-link>

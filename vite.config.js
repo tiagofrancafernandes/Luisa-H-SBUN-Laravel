@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
 
 export default defineConfig({
     plugins: [
@@ -10,5 +12,7 @@ export default defineConfig({
             ],
             refresh: true,
         }),
+        typography,
+        forms,
     ],
 });

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use DateTimeZone;
 use App\Enums\RequestBorrowStatus;
+use Illuminate\Support\Collection;
 
 #[\AllowDynamicProperties]
 /**
@@ -124,5 +125,12 @@ class Book extends Model
             'book_id' => $this->id,
             'status' => $status ?? RequestBorrowStatus::PENDING,
         ]);
+    }
+
+    public static function keyValue(string $columnAsValue = 'title', string $columnAsKey = 'id'): Collection
+    {
+        $cacheKey = implode(':', [static::class, $columnAsKey, $columnAsValue]);
+
+        return cache()->remember($cacheKey, 5 * 60, fn () => static::pluck($columnAsValue, $columnAsKey));
     }
 }
