@@ -14,8 +14,10 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        //dd($books);
-        //dump and die, debug only
+        if ($request?->user()?->isAdmin()) {
+            return redirect()->route('admin.books.index');
+        }
+
         return view('books.index', [
             //'books' => DB::table('books')->limit(20)->get(),
             'myBorrowedBooks' => Borrow::where('user_id', auth()->user()->id)

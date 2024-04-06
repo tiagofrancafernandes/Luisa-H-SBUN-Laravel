@@ -23,29 +23,59 @@ $isAdmin = auth()->user()?->isAdmin();
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-5 sm:flex">
+                    @unless($isAdmin ?? null)
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
                         {{ __('Books') }}
                     </x-nav-link>
-
-                    @if ($isAdmin ?? null)
-                    <div class="border-l border-orange-100 dark:border-orange-700">
-                    </div>
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    @else
+                    <x-nav-link
+                        :href="route('admin.dashboard')"
+                        :active="request()->routeIs('admin.dashboard')"
+                        @class([
+                            'border-b-0 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-600 dark:hover:text-gray-300',
+                            'bg-transparent' => !request()->routeIs('admin.dashboard'),
+                            'bg-gray-100 text-gray-600 dark:bg-gray-600 dark:text-gray-300' => request()->routeIs('admin.dashboard'),
+                        ])
+                    >
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.index')">
+                    <x-nav-link
+                        :href="route('admin.books.index')"
+                        :active="request()->routeIs('admin.books.index')"
+                        @class([
+                            'border-b-0 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-600 dark:hover:text-gray-300',
+                            'bg-transparent' => !request()->routeIs('admin.books.index'),
+                            'bg-gray-100 text-gray-600 dark:bg-gray-600 dark:text-gray-300' => request()->routeIs('admin.books.index'),
+                        ])
+                    >
                         {{ __('Books') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.request_borrow.index')" :active="request()->routeIs('admin.request_borrow.index')">
+                    <x-nav-link
+                        :href="route('admin.request_borrow.index')"
+                        :active="request()->routeIs('admin.request_borrow.index')"
+                        @class([
+                            'border-b-0 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-600 dark:hover:text-gray-300',
+                            'bg-transparent' => !request()->routeIs('admin.request_borrow.index'),
+                            'bg-gray-100 text-gray-600 dark:bg-gray-600 dark:text-gray-300' => request()->routeIs('admin.request_borrow.index'),
+                        ])
+                    >
                         {{ __('Request borrows') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.request_return.index')" :active="request()->routeIs('admin.request_return.index')">
+                    <x-nav-link
+                        :href="route('admin.request_return.index')"
+                        :active="request()->routeIs('admin.request_return.index')"
+                        @class([
+                            'border-b-0 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-600 dark:hover:text-gray-300',
+                            'bg-transparent' => !request()->routeIs('admin.request_return.index'),
+                            'bg-gray-100 text-gray-600 dark:bg-gray-600 dark:text-gray-300' => request()->routeIs('admin.request_return.index'),
+                        ])
+                    >
                         {{ __('Request return') }}
                     </x-nav-link>
-                    @endif
+                    @endunless
                 </div>
             </div>
 

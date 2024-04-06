@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Borrow;
 use Illuminate\Http\Request;
+use Route;
 
 class DashboardController extends Controller
 {
@@ -15,6 +16,10 @@ class DashboardController extends Controller
 
     public function __invoke(Request $request)
     {
+        if ($request?->user()?->isAdmin() && Route::currentRouteName() !== 'admin.dashboard') {
+            return redirect()->route('admin.dashboard');
+        }
+
         if (!$request->user()?->isAdmin()) {
             return view('dashboard', static::getViewData($request->user()));
         }
